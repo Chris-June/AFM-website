@@ -241,6 +241,66 @@ npm run deps:clean   # Clean and reinstall dependencies
 - Prefer deterministic, testable modules
 - Ensure tests pass before submitting PRs
 
+## Recommended Contributions
+
+### TODO (Partially Implemented)
+
+These features exist in the codebase but are not fully operational:
+
+- **AI Chat Feature (AFM Companion)**
+  - Location: `components/ai/afm-companion.tsx`, `app/api/chat/route.ts`
+  - Status: Component and API route exist, but requires `OPENAI_API_KEY` in `.env.local`
+  - Needed: Add OpenAI API key to environment variables and update README environment variables section
+
+- **Content Submission Review Workflow**
+  - Location: `app/[locale]/submit/page.tsx`, `convex/writings.ts`, `convex/schema.ts`
+  - Status: Submission form works and stores to Convex `submissions` table with status "pending"
+  - Needed: Admin interface to review, approve, or reject submissions; workflow to move approved submissions to `artworks`/`writings` tables
+
+- **Resources Page Database Integration**
+  - Location: `app/[locale]/resources/page.tsx`, `convex/schema.ts`
+  - Status: Articles table exists in schema but not populated; page uses hardcoded article array
+  - Needed: Connect articles to database, implement article detail pages, replace "coming soon" toasts with actual links
+
+- **Self-Care Toolkit Article Links**
+  - Location: `components/resources/self-care-toolkit.tsx`
+  - Status: Toolkit exists but article recommendation buttons show "coming soon" toast
+  - Needed: Implement article detail pages and link toolkit recommendations to actual articles
+
+### Aspirational (Not Yet Implemented)
+
+These features do not exist in the codebase but would be valuable additions:
+
+- **User Authentication System**
+  - Login/signup functionality
+  - User profiles and session management
+  - Protected routes for admin features
+
+- **Social Features**
+  - Persistent likes/favorites for artworks and stories
+  - Comments system
+  - User profiles with submission history
+
+- **Admin Dashboard**
+  - Centralized interface for managing submissions
+  - Content moderation tools
+  - Analytics and reporting
+
+- **Advanced Search & Filtering**
+  - Full-text search across artworks and writings
+  - Category/type filters
+  - Advanced filtering options
+
+- **Email Notifications**
+  - Submission status updates
+  - New featured content alerts
+  - Newsletter functionality
+
+- **Internationalization (i18n)**
+  - English/French support (mentioned in project rules but not implemented)
+  - Locale-aware routing
+  - Translated content and UI
+
 ## License
 
 This project is open-source and available under the MIT License.
