@@ -89,6 +89,19 @@ CONVEX_SITE_URL=https://your-deployment.convex.site
 NEXT_PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
 ```
 
+### Vercel Deployment
+
+When deploying to Vercel, you must add the following environment variables in your Vercel project settings (Settings → Environment Variables):
+
+```env
+NEXT_PUBLIC_CONVEX_URL=https://your-deployment.convex.cloud
+CONVEX_DEPLOYMENT=prod:your-deployment-name
+CONVEX_URL=https://your-deployment.convex.cloud
+CONVEX_SITE_URL=https://your-deployment.convex.site
+```
+
+**Critical:** `NEXT_PUBLIC_CONVEX_URL` must be set in Vercel for the ConvexReactClient to work in production. Without this, the app will throw "No address provided to ConvexReactClient" error.
+
 ### Convex Setup
 
 ```bash
