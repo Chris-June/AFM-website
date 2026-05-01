@@ -3,11 +3,16 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Eye } from "lucide-react";
 import Link from "next/link";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import Image from "next/image";
 
 interface GalleryCardProps {
   title: string;
   artist: string;
-  imageUrl: string;
+  imageUrl?: string;
+  storageId?: Id<"_storage">;
   type: "art" | "story";
   href: string;
   size?: "large" | "medium" | "small" | "wide";
@@ -17,10 +22,14 @@ export function GalleryCard({
   title,
   artist,
   imageUrl,
+  storageId,
   type,
   href,
   size = "medium",
 }: GalleryCardProps) {
+  // Get URL from Convex storage if storageId is provided
+  const convexImageUrl = useQuery(api.storage.getImageUrl, storageId ? { storageId } : "skip");
+  const finalImageUrl = storageId && convexImageUrl ? convexImageUrl : imageUrl;
   const sizeClasses = {
     large: "md:col-span-2 md:row-span-2 aspect-[4/5] md:aspect-auto",
     medium: "md:col-span-1 md:row-span-2 aspect-[3/4]",
@@ -39,11 +48,19 @@ export function GalleryCard({
       <Link href={href} className="block w-full h-full">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
-            src={imageUrl}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
+          {finalImageUrl ? (
+            <Image
+              src={finalImageUrl}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+              <p className="text-foreground/60 font-serif italic">Image coming soon</p>
+            </div>
+          )}
           {/* Gradient Overlay - Always visible but intensifies on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
         </div>

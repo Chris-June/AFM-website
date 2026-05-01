@@ -4,7 +4,6 @@ import { Navbar } from "@/components/layout/navbar";
 import { ArrowUpRight, Search } from "lucide-react";
 import { SelfCareToolkit } from "@/components/resources/self-care-toolkit";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { toast } from "sonner";
 import { useState, useMemo } from "react";
 
@@ -14,21 +13,18 @@ const articles = [
     summary: "Understanding the psychology of 'flow' and how it helps build cognitive resilience against stress.",
     category: "Mindfulness",
     author: "AFM Editorial",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop"
   },
   {
     title: "Building Resilience",
     summary: "Practical tips for maintaining a consistent creative practice even during difficult mental health periods.",
     category: "Growth",
     author: "AFM Editorial",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop"
   },
   {
     title: "The Art of Self-Compassion",
     summary: "How engaging in visual arts can lower cortisol levels and provide a non-verbal way to process emotion.",
     category: "Wellness",
     author: "AFM Editorial",
-    image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=800&auto=format&fit=crop"
   },
 ];
 
@@ -113,34 +109,24 @@ export default function ResourcesPage() {
                 </div>
               ) : (
                 filteredArticles.map((article, i) => (
-                 <motion.div 
+                 <motion.div
                    initial={{ opacity: 0, y: 20 }}
                    whileInView={{ opacity: 1, y: 0 }}
                    viewport={{ once: true }}
                    transition={{ delay: i * 0.1 }}
-                   key={i} 
-                   className="card-cream group"
+                   key={i}
+                   className="card-cream group p-6 flex flex-col"
                  >
-                    <div className="relative w-full aspect-4/3 rounded-[24px] overflow-hidden">
-                       <Image 
-                         src={article.image} 
-                         alt={article.title} 
-                         fill
-                         className="object-cover transition-transform duration-700 group-hover:scale-105"
-                         sizes="(max-width: 768px) 100vw, 33vw"
-                       />
-                    </div>
-                    
-                    <div className="px-4 pb-4 space-y-4 flex-1 flex flex-col">
+                    <div className="flex-1 space-y-4">
                        <h3 className="text-2xl font-bold font-serif text-foreground leading-tight">{article.title}</h3>
                        <div className="flex gap-2">
                           <span className="px-3 py-1 border border-foreground/20 rounded-full text-xs font-bold tracking-wider uppercase text-foreground/60">
                             {article.category}
                           </span>
                        </div>
-                       
+
                        <div className="mt-auto pt-6">
-                          <button 
+                          <button
                             onClick={() => toast.info("Full article coming soon!", { description: "We're working on detailed article pages." })}
                             className="w-full py-4 rounded-full bg-foreground/5 text-foreground font-bold tracking-wide hover:bg-foreground hover:text-card transition-colors flex items-center justify-center gap-2"
                           >

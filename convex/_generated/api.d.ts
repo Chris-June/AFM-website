@@ -8,8 +8,10 @@
  * @module
  */
 
+import type * as add_chris_june_artworks from "../add_chris_june_artworks.js";
 import type * as arts from "../arts.js";
 import type * as seed from "../seed.js";
+import type * as storage from "../storage.js";
 import type * as writings from "../writings.js";
 
 import type {
@@ -19,8 +21,10 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  add_chris_june_artworks: typeof add_chris_june_artworks;
   arts: typeof arts;
   seed: typeof seed;
+  storage: typeof storage;
   writings: typeof writings;
 }>;
 

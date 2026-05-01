@@ -5,6 +5,9 @@ import Image from "next/image";
 import { X, User, Quote, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface GalleryLightboxProps {
   isOpen: boolean;
@@ -13,7 +16,8 @@ interface GalleryLightboxProps {
     title: string;
     artist: string;
     description: string;
-    imageUrl: string;
+    imageUrl?: string;
+    storageId?: Id<"_storage">;
     type: string;
   } | null;
 }
@@ -31,7 +35,11 @@ export function GalleryLightbox({ isOpen, onClose, art }: GalleryLightboxProps) 
     };
   }, [isOpen]);
 
-  if (!art) return null;
+  // Get URL from Convex storage if storageId is provided
+  const convexImageUrl = useQuery(api.storage.getImageUrl, art?.storageId ? { storageId: art.storageId } : "skip");
+  const finalImageUrl = art?.storageId && convexImageUrl ? convexImageUrl : art?.imageUrl;
+
+  if (!art || !finalImageUrl) return null;
 
   return (
     <AnimatePresence>
@@ -65,7 +73,7 @@ export function GalleryLightbox({ isOpen, onClose, art }: GalleryLightboxProps) 
             <div className="relative flex-1 bg-zinc-950/20 flex items-center justify-center p-4 md:p-12">
                <div className="relative w-full h-full">
                 <Image
-                    src={art.imageUrl}
+                    src={finalImageUrl}
                     alt={art.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 70vw"

@@ -17,7 +17,7 @@ function useIsClient() {
 
 interface Logo {
   name: string;
-  src: string;
+  src?: string;
   href?: string;
 }
 
@@ -91,6 +91,17 @@ export function LogoBanner({
 
 function LogoImage({ logo }: { logo: Logo }) {
   const isClient = useIsClient();
+
+  // If no src provided, use text fallback
+  if (!logo.src) {
+    return (
+      <div className="h-12 w-40 flex items-center justify-center">
+        <span className="text-lg font-bold text-foreground/80 tracking-wide">
+          {logo.name}
+        </span>
+      </div>
+    );
+  }
 
   // Check if src is a URL or a local image
   const isExternalUrl = logo.src.startsWith("http") || logo.src.startsWith("//");

@@ -4,24 +4,36 @@ import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { MouseEvent } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 interface GalleryItemProps {
   title: string;
   artist: string;
-  imageUrl: string;
+  imageUrl?: string;
+  storageId?: Id<"_storage">;
   type: string;
   className?: string;
   onClick?: () => void;
 }
 
-export function GalleryItem({ title, artist, imageUrl, type, className, onClick }: GalleryItemProps) {
+export function GalleryItem({ title, artist, imageUrl, storageId, type, className, onClick }: GalleryItemProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  // Get URL from Convex storage if storageId is provided
+  const convexImageUrl = useQuery(api.storage.getImageUrl, storageId ? { storageId } : "skip");
+  const finalImageUrl = storageId && convexImageUrl ? convexImageUrl : imageUrl;
 
   function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
+  }
+
+  if (!finalImageUrl) {
+    return null;
   }
 
   return (
@@ -55,7 +67,7 @@ export function GalleryItem({ title, artist, imageUrl, type, className, onClick 
 
       <div className="relative h-full w-full overflow-hidden rounded-[24px]">
         <Image
-          src={imageUrl}
+          src={finalImageUrl}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"

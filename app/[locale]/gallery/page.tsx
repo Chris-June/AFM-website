@@ -101,6 +101,7 @@ export default function GalleryPage() {
                         title={art.title}
                         artist={art.artist}
                         imageUrl={art.imageUrl}
+                        storageId={art.storageId}
                         type={art.type}
                         onClick={() => handleOpenLightbox(art)}
                         className="transform transition-transform duration-500 hover:scale-105"
@@ -165,7 +166,7 @@ export default function GalleryPage() {
           <GalleryLayeredStack artworks={gridArt} onItemClick={handleOpenLightbox} />
         </div>
 
-        <GalleryLightbox 
+        <GalleryLightbox
           isOpen={isLightboxOpen}
           onClose={() => setIsLightboxOpen(false)}
           art={selectedArt ? {
@@ -173,6 +174,7 @@ export default function GalleryPage() {
             artist: selectedArt.artist,
             description: selectedArt.description,
             imageUrl: selectedArt.imageUrl,
+            storageId: selectedArt.storageId,
             type: selectedArt.type
           } : null}
         />

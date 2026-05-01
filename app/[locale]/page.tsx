@@ -9,22 +9,21 @@ import { LogoBanner } from "@/components/common/logo-banner";
 import { motion } from "framer-motion";
 import { ArrowRight, Heart, Quote, Loader2 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 // Canadian partner organizations
-const partnerLogos = [
-  { name: "CMHA", src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=200&auto=format&fit=crop" },
-  { name: "CAMH", src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=200&auto=format&fit=crop" },
-  { name: "Bell Let's Talk", src: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=200&auto=format&fit=crop" },
-  { name: "Kids Help Phone", src: "https://images.unsplash.com/photo-1493612276216-ee3925520721?q=80&w=200&auto=format&fit=crop" },
-  { name: "Wellness Together Canada", src: "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?q=80&w=200&auto=format&fit=crop" },
-  { name: "Jack.org", src: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=200&auto=format&fit=crop" },
-  { name: "Crisis Services Canada", src: "https://images.unsplash.com/photo-1590102426319-c98212cf4b45?q=80&w=200&auto=format&fit=crop" },
-  { name: "Artists for Mental Health", src: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=200&auto=format&fit=crop" },
+const partnerLogos: Array<{ name: string; src?: string }> = [
+  { name: "CMHA", src: "/_logo.png" },
+  { name: "CAMH", src: "/_logo.png" },
+  { name: "Bell Let's Talk", src: "/_logo.png" },
+  { name: "Kids Help Phone", src: "/_logo.png" },
+  { name: "Wellness Together Canada", src: "/_logo.png" },
+  { name: "Jack.org", src: "/_logo.png" },
+  { name: "Crisis Services Canada", src: "/_logo.png" },
+  { name: "Artists for Mental Health", src: "/_logo.png" },
 ];
 
 export default function Home() {
@@ -86,6 +85,7 @@ export default function Home() {
                   title={work.title}
                   artist={work.artist}
                   imageUrl={work.imageUrl}
+                  storageId={work.storageId}
                   type="art"
                   href="/gallery"
                   size={["large", "medium", "small", "wide", "medium"][index % 5] as "large" | "medium" | "small" | "wide"}
@@ -164,15 +164,10 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=2671&auto=format&fit=crop"
-                  alt="Artist at work"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <p className="text-foreground/60 font-serif italic">Image coming soon</p>
+                </div>
               </div>
               
               {/* Floating accent card */}

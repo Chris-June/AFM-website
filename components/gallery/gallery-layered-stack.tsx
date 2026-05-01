@@ -68,6 +68,7 @@ function LayeredStackCard({
         title={artwork.title}
         artist={artwork.artist}
         imageUrl={artwork.imageUrl}
+        storageId={artwork.storageId}
         type={artwork.type}
         onClick={() => onItemClick(artwork)}
         className="aspect-[4/5] bg-card/70 backdrop-blur-sm"
@@ -92,6 +93,7 @@ export function GalleryLayeredStack({ artworks, onItemClick }: GalleryLayeredSta
             title={artwork.title}
             artist={artwork.artist}
             imageUrl={artwork.imageUrl}
+            storageId={artwork.storageId}
             type={artwork.type}
             onClick={() => onItemClick(artwork)}
           />
